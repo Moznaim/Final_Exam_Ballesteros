@@ -1,0 +1,36 @@
+---
+  - name: copy html file for site
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: install apache and php in ubuntu
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache and php in centos
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: start apache in centos
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "CentOS"
+
+  - name: start apache in ubuntu
+    service:
+      name: apache2
+      state: started
+    when: ansible_distribution == "Ubuntu"

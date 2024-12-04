@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - base
+
+- hosts: apache
+  become: true
+  roles:
+    - apache
+
+- hosts: prometheus
+  become: true
+  roles:
+    - prometheus
+
+
